@@ -1,7 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { decode, type TagDecoder } from "cborg";
 import { URDecoder } from "@ngraveio/bc-ur";
-import { buildEthSignRequestUR } from "../lib/ethSignRequest";
+import {
+  buildEthSignRequestUR,
+  buildEthSignRequestURParts,
+} from "../lib/ethSignRequest";
 
 const ETH_ADDRESS = "0xa786ec7488A340964Fc4a0367144436BeB7904CE";
 const SOURCE_FINGERPRINT = 0x68161a1c;
@@ -84,8 +87,26 @@ describe("buildEthSignRequestUR", () => {
     const ur = buildEthSignRequestUR("Hello", ETH_ADDRESS, SOURCE_FINGERPRINT);
     decoder.receivePart(ur.toLowerCase());
     const cbor = new Uint8Array(decoder.resultUR().cbor);
-    // CBOR tag 37 = 0xd8 0x25
     const hex = [...cbor].map((b) => b.toString(16).padStart(2, "0")).join("");
-    expect(hex).toContain("d825"); // tag(37) marker
+    expect(hex).toContain("d825");
+  });
+
+  it("splits long requests into animated multipart URs", () => {
+    const longMessage = "Hello Shell ".repeat(80);
+    const parts = buildEthSignRequestURParts(
+      longMessage,
+      ETH_ADDRESS,
+      SOURCE_FINGERPRINT,
+    );
+
+    expect(parts.length).toBeGreaterThan(1);
+
+    const decoder = new URDecoder();
+    for (const part of parts) {
+      decoder.receivePart(part.toLowerCase());
+    }
+
+    expect(decoder.isComplete()).toBe(true);
+    expect(decoder.resultUR().type).toBe("eth-sign-request");
   });
 });

@@ -295,6 +295,14 @@
   gap: 6px;
 }
 
+.signature-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .signature-label {
   margin: 0;
   font-size: 14px;
@@ -310,6 +318,41 @@
   padding: 10px 12px;
   border-radius: 6px;
   color: var(--text-h);
+}
+
+.verification-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.verification-badge.verified {
+  background: rgba(34, 197, 94, 0.14);
+  color: #15803d;
+}
+
+.verification-badge.failed {
+  background: rgba(239, 68, 68, 0.14);
+  color: #dc2626;
+}
+
+.verification-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.verification-feedback.failed {
+  color: #ef4444;
+}
+
+.verification-icon {
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 .sign-error {

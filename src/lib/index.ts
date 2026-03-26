@@ -5,9 +5,16 @@ export type { DerivedKeys } from "./deriveKeys";
 
 export { parseXpub } from "./parseXpub";
 export { deriveKeys } from "./deriveKeys";
-export { buildEthSignRequestUR } from "./ethSignRequest";
+export {
+  buildEthSignRequestUR,
+  buildEthSignRequestURParts,
+} from "./ethSignRequest";
 export { parseEthSignature } from "./ethSignature";
 export type { BtcKeyType } from "./btcSignRequest";
-export { buildBtcSignRequestUR } from "./btcSignRequest";
+export {
+  buildBtcSignRequestUR,
+  buildBtcSignRequestURParts,
+} from "./btcSignRequest";
 export type { BtcSignatureResult } from "./btcSignature";
 export { parseBtcSignature } from "./btcSignature";
+export { verifyBtcSignatureResponse } from "./btcMessageVerification";

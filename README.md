@@ -8,16 +8,16 @@ A web dApp that integrates with the [Shell](https://keyst.one/) hardware wallet 
 
 1. **Connect** — scan Shell's QR code to import your extended public keys
 2. **Addresses** — displays your derived addresses across all supported derivation paths
-3. **Sign** — type a message, tap Sign, scan the QR with Shell, then scan Shell's response to receive the signature
+3. **Sign** — type a message, tap Sign, scan the animated QR with Shell, then scan Shell's response to receive the signature
 
 Supported key types:
 
-| Key | Path | Address format |
-|-----|------|---------------|
-| EVM / Ethereum | `m/44'/60'/0'/0/0` | EIP-55 checksummed |
-| Bitcoin Legacy | `m/44'/0'/0'/0/0` | P2PKH (`1...`) |
-| Bitcoin Nested SegWit | `m/49'/0'/0'/0/0` | P2SH-P2WPKH (`3...`) |
-| Bitcoin Native SegWit | `m/84'/0'/0'/0/0` | bech32 (`bc1q...`) |
+| Key                   | Path               | Address format       |
+| --------------------- | ------------------ | -------------------- |
+| EVM / Ethereum        | `m/44'/60'/0'/0/0` | EIP-55 checksummed   |
+| Bitcoin Legacy        | `m/44'/0'/0'/0/0`  | P2PKH (`1...`)       |
+| Bitcoin Nested SegWit | `m/49'/0'/0'/0/0`  | P2SH-P2WPKH (`3...`) |
+| Bitcoin Native SegWit | `m/84'/0'/0'/0/0`  | bech32 (`bc1q...`)   |
 
 ## Getting started
 
@@ -43,7 +43,8 @@ Shell speaks [ERC-4527](https://eips.ethereum.org/EIPS/eip-4527) — a QR-based 
 
 - Decodes `ur:crypto-hdkey` and `ur:crypto-account` QR codes (including animated multi-part QRs) to extract account-level extended public keys
 - Derives addresses locally using `@scure/bip32`
-- Encodes `ur:eth-sign-request` (EIP-191 `personal_sign`) and `ur:btc-sign-request` payloads as QR codes for Shell to scan
+- Encodes `ur:eth-sign-request` and `ur:btc-sign-request` payloads as animated QR codes when needed so longer messages still round-trip
+- Verifies scanned Bitcoin signatures against the signed address and message with `bip322-js`
 - Decodes `ur:eth-signature` and `ur:btc-signature` responses from Shell
 
 See [docs/integration-guide.md](docs/integration-guide.md) for the full developer integration guide.
@@ -76,6 +77,7 @@ docs/
 - `@scure/bip32` — HD key derivation
 - `@noble/hashes` — SHA-256, Keccak-256, RIPEMD-160
 - `@scure/base` — base58check, bech32
+- `bip322-js` — Bitcoin message verification
 - `cborg` — CBOR decoding
 - `jsqr` — camera QR decoding
 - `qrcode` — QR code rendering

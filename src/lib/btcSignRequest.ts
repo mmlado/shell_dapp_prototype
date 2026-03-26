@@ -1,5 +1,5 @@
-import { UR, UREncoder } from "@ngraveio/bc-ur";
 import { encode, CborTag } from "./cbor";
+import { encodeURFirstPart, encodeURParts } from "./urEncoding";
 
 // btc-data-type: btc-message = 1
 const BTC_DATA_TYPE_MESSAGE = 1;
@@ -46,12 +46,12 @@ function buildKeypath(
   return new CborTag(TAG_KEYPATH, keypathMap);
 }
 
-export function buildBtcSignRequestUR(
+function buildBtcSignRequestCbor(
   message: string,
   address: string,
   keyType: BtcKeyType,
   sourceFingerprint: number | undefined,
-): string {
+): Uint8Array {
   const [purpose, coinType] = BTC_PATHS[keyType];
   const requestId = randomBytes(16);
   const messageBytes = new TextEncoder().encode(message);
@@ -66,8 +66,29 @@ export function buildBtcSignRequestUR(
     [6, "shell-dapp"], // btc-origin
   ]);
 
-  const cbor = encode(map);
-  const ur = new UR(Buffer.from(cbor), "btc-sign-request");
-  const encoder = new UREncoder(ur, 200);
-  return encoder.nextPart().toUpperCase();
+  return encode(map);
+}
+
+export function buildBtcSignRequestURParts(
+  message: string,
+  address: string,
+  keyType: BtcKeyType,
+  sourceFingerprint: number | undefined,
+): string[] {
+  return encodeURParts(
+    buildBtcSignRequestCbor(message, address, keyType, sourceFingerprint),
+    "btc-sign-request",
+  );
+}
+
+export function buildBtcSignRequestUR(
+  message: string,
+  address: string,
+  keyType: BtcKeyType,
+  sourceFingerprint: number | undefined,
+): string {
+  return encodeURFirstPart(
+    buildBtcSignRequestCbor(message, address, keyType, sourceFingerprint),
+    "btc-sign-request",
+  );
 }

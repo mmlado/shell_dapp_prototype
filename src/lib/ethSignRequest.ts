@@ -1,5 +1,5 @@
-import { UR, UREncoder } from "@ngraveio/bc-ur";
 import { encode, CborTag } from "./cbor";
+import { encodeURFirstPart, encodeURParts } from "./urEncoding";
 
 // EIP-191 personal_sign = eth-raw-bytes (Shell/ERC-4527 data type 3)
 const DATA_TYPE_ETH_RAW_BYTES = 3;
@@ -38,11 +38,11 @@ function buildKeypath(
   return new CborTag(TAG_KEYPATH, keypathMap);
 }
 
-export function buildEthSignRequestUR(
+function buildEthSignRequestCbor(
   message: string,
   address: string,
   sourceFingerprint: number | undefined,
-): string {
+): Uint8Array {
   const requestId = randomBytes(16);
   const messageBytes = new TextEncoder().encode(message);
   const keypath = buildKeypath(44, 60, sourceFingerprint);
@@ -62,9 +62,27 @@ export function buildEthSignRequestUR(
     [7, "shell-dapp"], // origin
   ]);
 
-  const cbor = encode(map);
-  const ur = new UR(Buffer.from(cbor), "eth-sign-request");
-  // Single-part UR for reasonable message sizes
-  const encoder = new UREncoder(ur, 200);
-  return encoder.nextPart().toUpperCase();
+  return encode(map);
+}
+
+export function buildEthSignRequestURParts(
+  message: string,
+  address: string,
+  sourceFingerprint: number | undefined,
+): string[] {
+  return encodeURParts(
+    buildEthSignRequestCbor(message, address, sourceFingerprint),
+    "eth-sign-request",
+  );
+}
+
+export function buildEthSignRequestUR(
+  message: string,
+  address: string,
+  sourceFingerprint: number | undefined,
+): string {
+  return encodeURFirstPart(
+    buildEthSignRequestCbor(message, address, sourceFingerprint),
+    "eth-sign-request",
+  );
 }
