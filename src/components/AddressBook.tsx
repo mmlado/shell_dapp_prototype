@@ -16,6 +16,7 @@ interface KeyRow {
   label: string;
   bip: string;
   value: string | null;
+  publicKey: string | null;
 }
 
 interface AddressBookProps {
@@ -40,24 +41,28 @@ export function AddressBook({ keys, onBack }: AddressBookProps) {
         label: "EVM / Ethereum",
         bip: "BIP-44  m/44'/60'/0'/0/0",
         value: keys.evm,
+        publicKey: keys.evmPublicKey,
       },
       {
         id: "btcLegacy",
         label: "Bitcoin Legacy",
         bip: "BIP-44  m/44'/0'/0'/0/0",
         value: keys.btcLegacy,
+        publicKey: keys.btcLegacyPublicKey,
       },
       {
         id: "btcNestedSegwit",
         label: "Bitcoin Nested SegWit",
         bip: "BIP-49  m/49'/0'/0'/0/0",
         value: keys.btcNestedSegwit,
+        publicKey: keys.btcNestedSegwitPublicKey,
       },
       {
         id: "btcNativeSegwit",
         label: "Bitcoin Native SegWit",
         bip: "BIP-84  m/84'/0'/0'/0/0",
         value: keys.btcNativeSegwit,
+        publicKey: keys.btcNativeSegwitPublicKey,
       },
     ],
     [keys],
@@ -173,6 +178,9 @@ export function AddressBook({ keys, onBack }: AddressBookProps) {
                 </span>
               )}
             </div>
+            {row.publicKey && (
+              <div className="key-pubkey">{row.publicKey}</div>
+            )}
           </li>
         ))}
       </ul>
