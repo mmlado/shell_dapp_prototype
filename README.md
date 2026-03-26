@@ -1,5 +1,7 @@
 # Shell dApp Prototype
 
+**Live demo: https://shelldappprototype.vercel.app/**
+
 A web dApp that integrates with the [Shell](https://keyst.one/) hardware wallet entirely via QR codes — no browser extension, no USB, no Bluetooth. Everything goes through the camera.
 
 ## What it does
