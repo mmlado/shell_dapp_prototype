@@ -31,6 +31,16 @@ export default function App() {
     <div className="app">
       {screen === "scan" && (
         <>
+          <div className="connect-instructions">
+            <h2>Connect Shell</h2>
+            <ol>
+              <li>
+                On Shell, go to <strong>Connect software wallet</strong>
+              </li>
+              <li>Select a chain (Ethereum or Bitcoin)</li>
+              <li>Point Shell's screen at this camera</li>
+            </ol>
+          </div>
           <QRScanner onScan={handleScan} />
           {scanError && <div className="scan-error">{scanError}</div>}
         </>

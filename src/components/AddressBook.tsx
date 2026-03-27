@@ -84,8 +84,12 @@ export function AddressBook({ keys, onBack }: AddressBookProps) {
 
   useEffect(() => {
     if (selectedKey) return;
-    const first = rows.find((row) => row.value !== null);
-    if (first) setSelectedKey(first.id);
+    // Prefer native SegWit for Bitcoin, EVM for Ethereum, otherwise first available
+    const preferred =
+      rows.find((row) => row.id === "btcNativeSegwit" && row.value !== null) ??
+      rows.find((row) => row.id === "evm" && row.value !== null) ??
+      rows.find((row) => row.value !== null);
+    if (preferred) setSelectedKey(preferred.id);
   }, [rows, selectedKey]);
 
   const handleSign = useCallback(() => {
