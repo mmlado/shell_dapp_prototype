@@ -2,6 +2,8 @@
 
 **Live demo: https://shelldappprototype.vercel.app/**
 
+This project was submitted to the [Logos Lambda Prize](https://github.com/logos-co/lambda-prize/pull/21) and won. The winning proposal is linked in that PR.
+
 A web dApp that integrates with the [Shell](https://keyst.one/) hardware wallet entirely via QR codes — no browser extension, no USB, no Bluetooth. Everything goes through the camera.
 
 ## What it does
