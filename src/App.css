@@ -6,6 +6,31 @@
   color: var(--text);
 }
 
+/* ── About banner ── */
+.site-about {
+  width: 100%;
+  background: var(--accent-bg);
+  border-bottom: 1px solid var(--accent-border);
+  padding: 10px 24px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: var(--text);
+  text-align: center;
+}
+
+.site-about p {
+  margin: 0;
+}
+
+.site-about a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.site-about a:hover {
+  text-decoration: underline;
+}
+
 /* ── Scanner ── */
 .scanner-container {
   flex: 1;
