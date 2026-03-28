@@ -31,44 +31,47 @@ export default function App() {
     <div className="app">
       {screen === "scan" && (
         <>
-          <div className="site-about">
-            <p>
-              A browser dApp that connects to the Shell hardware wallet via QR codes only — no extension, no USB, no Bluetooth.
-              Scan Shell's QR to import keys, view addresses, and sign messages.
-              Requires a{" "}
-              <a href="https://get.keycard.tech/mmlado" target="_blank" rel="noreferrer">
-                Shell device
-              </a>{" "}
-              (use code <strong>ShellSummer9746</strong> for 5% off orders over $25).{" "}
-              <a
-                href="https://github.com/mmlado/shell_dapp_prototype"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Source on GitHub
-              </a>{" "}
-              &mdash;{" "}
-              <a
-                href="https://github.com/logos-co/lambda-prize/pull/21"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Logos Lambda Prize winner
-              </a>
-            </p>
+          <div className="scan-screen">
+            <div className="connect-instructions">
+              <h2>Connect Shell</h2>
+              <ol>
+                <li>
+                  On Shell, go to <strong>Connect software wallet</strong>
+                </li>
+                <li>Select a chain (Ethereum or Bitcoin)</li>
+                <li>Point Shell's screen at this camera</li>
+              </ol>
+            </div>
+            <QRScanner onScan={handleScan} />
+            {scanError && <div className="scan-error">{scanError}</div>}
+            <div className="connect-instructions">
+              <p>
+                Connect to the Shell hardware wallet via QR codes — no extension, no USB, no Bluetooth.{" "}
+                <a
+                  href="https://github.com/mmlado/shell_dapp_prototype"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Source on GitHub
+                </a>{" "}
+                &mdash;{" "}
+                <a
+                  href="https://github.com/logos-co/lambda-prize/pull/21"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Logos Lambda Prize winner
+                </a>
+              </p>
+              <p>
+                Don't have Shell yet?{" "}
+                <a href="https://get.keycard.tech/mmlado" target="_blank" rel="noreferrer">
+                  Get one here
+                </a>{" "}
+                — use code <strong>ShellSummer9746</strong> for 5% off orders over $25.
+              </p>
+            </div>
           </div>
-          <div className="connect-instructions">
-            <h2>Connect Shell</h2>
-            <ol>
-              <li>
-                On Shell, go to <strong>Connect software wallet</strong>
-              </li>
-              <li>Select a chain (Ethereum or Bitcoin)</li>
-              <li>Point Shell's screen at this camera</li>
-            </ol>
-          </div>
-          <QRScanner onScan={handleScan} />
-          {scanError && <div className="scan-error">{scanError}</div>}
         </>
       )}
       {screen === "addresses" && keys && (
