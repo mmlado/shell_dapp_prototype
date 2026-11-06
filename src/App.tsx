@@ -64,11 +64,11 @@ export default function App() {
                 </a>
               </p>
               <p>
-                Don't have Shell yet?{" "}
-                <a href="https://get.keycard.tech/mmlado" target="_blank" rel="noreferrer">
-                  Get one here
-                </a>{" "}
-                — use code <strong>ShellSummer9746</strong> for 5% off orders over $25.
+                Needs a{" "}
+                <a href="https://keycard.tech/products/keycard-shell" target="_blank" rel="noreferrer">
+                  Keycard Shell
+                </a>
+                .
               </p>
             </div>
           </div>
